@@ -1,4 +1,4 @@
-package com.sunagakure.sudoku
+package com.bugrabgz.sudoku
 
 import android.content.Context
 import android.util.Log
@@ -7,7 +7,7 @@ import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-
+// üç tane mantıksal iki tane içi boş liste değişkeni tanımladım.
 class Sudoku(context: Context) {
     var solved = false
     var ready = false
@@ -16,7 +16,8 @@ class Sudoku(context: Context) {
     var checked = false
     private var curContext: Context = context
 
-    private fun parseString(string: String) {
+    // fonksiyon oluşturup 9x9 tabanlı karelerimi kontrol ettiriyorum.
+    private fun tabla(string: String) {
         var i = 0;
         this.puzzle = Array(9) { IntArray(9) }
         this.solution = Array(9) { IntArray(9) }
@@ -31,14 +32,16 @@ class Sudoku(context: Context) {
             i++
         }
         ready = true
+
+        //kontrol etmek için fonksiyon oluşturdum.
     }
-    fun isSolved(): Boolean {
+    fun cözüldü(): Boolean {
         return solved
     }
     private fun markChecked() {
         this.checked = true
     }
-    fun inValidate() {
+    fun gecersiz() {
         this.checked = false
     }
     private fun markSolved() {
@@ -47,20 +50,22 @@ class Sudoku(context: Context) {
     fun isValidated(): Boolean {
         return checked
     }
-    fun isValidPositionToFill (i: Int, j: Int): Boolean {
+    fun konum (i: Int, j: Int): Boolean {
         return this.puzzle?.get(i)?.get(j) == -1
     }
-    fun isReady(): Boolean {
+    fun hazir(): Boolean {
         return ready
     }
-    fun getPuzzle() {
+
+    // tarayıcıda var olan sudoku problemini çektiriyorum.
+    fun yapboz() {
         val queue = Volley.newRequestQueue(curContext)
         val url = "https://agarithm.com/sudoku/new"
         val stringRequest = StringRequest(
             Request.Method.GET, url,
             Response.Listener<String> { response ->
                 Log.i("Bilgi", "Yanıt $response")
-                parseString(response)
+                tabla(response)
             },
             Response.ErrorListener { error: VolleyError? ->
                 Log.e("Hata", "Hatası: $error")
@@ -68,8 +73,8 @@ class Sudoku(context: Context) {
         )
         queue.add(stringRequest)
     }
-
-    fun resetSolution() {
+      // haritayı her başlangıçta sıfırlıyorum.
+    fun sifirlama() {
         var counter = 0
         while (counter < 81) {
             this.puzzle?.get(counter/9)?.get(counter%9)?.let {
@@ -81,7 +86,7 @@ class Sudoku(context: Context) {
         }
     }
 
-    fun checkSolution() {
+    fun kontrol() {
         this.markChecked()// değer false ile başlıyor.
         var hash : HashMap<Int, Int> = HashMap<Int, Int>()
         for(i in 1..9)
@@ -91,7 +96,7 @@ class Sudoku(context: Context) {
 
 
 
-
+     // oluşturuduğum her satır ve kolonu kontrol ettiriyorum.
         for (i in 0..8) {
             for (j in 1..9) {
                 hash[j] = 0
@@ -147,8 +152,8 @@ class Sudoku(context: Context) {
 
         this.markSolved()
     }
-
-    fun addNumber(i: Int, j: Int, value: Int) {
+// sanal cihazda uygulama başlatılınca sayı ekliyor veya siliyor.
+    fun noekle(i: Int, j: Int, value: Int) {
         Log.i("BİLGİ", "EKLEME $value")
         if (i != -1 && j != -1) {
             this.solution?.get(i)?.set(j, value)
@@ -156,7 +161,7 @@ class Sudoku(context: Context) {
             Log.i("NUMARAEKLE", "Hiçbir kutu seçilmediğinden sayı eklenemiyor")
         }
     }
-    fun removeNumber(i: Int, j: Int) {
+    fun nokaldir(i: Int, j: Int) {
         Log.i("Remove", "\n" + "Numara kaldırılıyor")
         if (i == -1 || j == -1) {
             Log.i("KALDIR","Hiçbir kutu seçilmediğinden numara kaldırılamadı")

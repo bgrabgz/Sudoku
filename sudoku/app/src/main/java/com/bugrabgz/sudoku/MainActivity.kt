@@ -1,13 +1,11 @@
-package com.sunagakure.sudoku
+package com.bugrabgz.sudoku
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+
 const val DIFFICULTY = "DIFFICULTY"
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

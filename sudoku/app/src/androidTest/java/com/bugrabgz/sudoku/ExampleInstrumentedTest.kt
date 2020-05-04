@@ -1,4 +1,4 @@
-package com.sunagakure.sudoku
+package com.bugrabgz.sudoku
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

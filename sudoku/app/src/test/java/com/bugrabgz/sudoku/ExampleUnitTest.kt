@@ -1,4 +1,4 @@
-package com.sunagakure.sudoku
+package com.bugrabgz.sudoku
 
 import org.junit.Test
 
